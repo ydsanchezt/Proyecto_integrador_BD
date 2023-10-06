@@ -1,0 +1,29 @@
+--Calcular el precio promedio de los productos en cada categoría 
+
+select avg(precio_unitario) as precio_promedio, categoria_Id
+from producto p 
+join categoria c on p.categoria_id = c.id 
+group by categoria_id
+order by categoria_id asc;
+
+--Obtener la cantidad total de productos en stock por categoría
+
+select c.nombre, sum(s.cantidad) as cantidad_total_productos
+from categoria c
+join producto p on p.categoria_id = p.id 
+join stock s on s.producto_id = c.id 
+group by c.nombre
+ORDER BY cantidad_total_productos asc;
+
+--Calcular el total de ventas por sucursal
+
+select s.nombre, sum(o.total) as ventas_total_sucursal
+from sucursal s 
+join orden o on o.sucursal_id = s.id 
+group by s.nombre; 
+
+--Obtener el cliente que ha realizado el mayor monto de compras
+select c.nombre, sum(o.total) as monto_compras
+from cliente c 
+join orden o on o.cliente_id = c.id
+group by c.nombre;
